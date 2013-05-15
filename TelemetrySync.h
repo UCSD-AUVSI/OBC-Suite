@@ -1,0 +1,2 @@
+int initTelListener();
+void * telemetrySync();

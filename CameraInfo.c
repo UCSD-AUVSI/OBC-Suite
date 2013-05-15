@@ -1,0 +1,29 @@
+#include <stdio.h>
+
+#include <gphoto2/gphoto2.h>
+
+Camera* my_Camera; 
+GPContext* my_Context;
+
+int initCamera(){
+	gp_camera_new(&my_Camera);
+	my_Context = gp_context_new();
+
+	int result = gp_camera_init(my_Camera, my_Context);
+	printf("\n\nCamera Init Result: %d\n\n", result);
+
+	if(result == -105){
+		printf("Camera not found, quitting.\n\n");
+		return -105;
+	} 
+	
+	return 0;
+}
+
+Camera* getMyCamera(){
+	return my_Camera;
+}
+
+GPContext* getMyContext(){
+	return my_Context;
+}

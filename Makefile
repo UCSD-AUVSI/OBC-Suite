@@ -1,11 +1,14 @@
 CC = gcc
 LIBS = -lpthread -lgphoto2
+CFLAGS = -o
+SOURCES = AUVSICameraCode.c ImageSync.c TelemetrySync.c GPSSync.c CameraControl.c SerialControl.c CameraInfo.c
+HEADERS= ImageSync.h TelemetrySync.h GPSSync.h CameraControl.h SerialControl.h CameraInfo.h
 
-AUVSICameraCode: AUVSICameraCode.c 
-	$(CC) AUVSICameraCode.c AUVSICameraCode.h -o CameraCode $(LIBS)
+CameraCode: $(SOURCES) $(HEADERS)
+	$(CC) $(SOURCES) $(CFLAGS) $@ $(LIBS)
 
-Settings: Settings.c
-	$(CC) Settings.c -o xSettings
+FrontEnd: Settings.c
+	$(CC) Settings.c $(CFLAGS) $@
 
-Clean: 
-	rm *.txt *.jpg
+clean: 
+	rm -f *.txt *.jpg 
