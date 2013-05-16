@@ -8,8 +8,10 @@
 #include <errno.h>	
 
 #include "SerialControl.h"
+#include "GPSSync.h"
 
 #define BUFFER_SIZE 80
+#define LINE_SIZE 150
 
 int serialFDTel;
 
@@ -31,7 +33,7 @@ void * telemetrySync()
 	char number[10]; //Assumed to be max of 5 character long number + ".txt" + NUL
 	memset(number, '\0', 9);
 
-	char line[BUFFER_SIZE];
+	char line[LINE_SIZE];
 	int readingString = 0;
 
 	while(1){
@@ -59,9 +61,14 @@ void * telemetrySync()
 						k = 0;
 
 						strcat(number, ".txt");
+						char* GPSData = getLastGPS();
+						strcat(line, GPSData);
+
 						FILE * telemfile = fopen(number, "w");
 						fprintf(telemfile, "%s",  line);
 						fclose(telemfile);
+
+						free(GPSData);
 						memset(number, '\0', 9);
 						memset(line, '\0', BUFFER_SIZE-1);
 					}
