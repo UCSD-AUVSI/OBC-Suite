@@ -104,7 +104,7 @@ void * SaveFiles(){
 			gp_file_free(my_CF -> my_File);
 			free(my_CF -> filename);
 			free(my_CF);
-			printf("\nFile Saved!\n");
+//			printf("\nFile Saved!\n");
 		}
 	}
 	return NULL;

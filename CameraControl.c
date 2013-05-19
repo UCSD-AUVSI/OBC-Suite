@@ -47,7 +47,7 @@ int CaptureControl(char mode){
 	}
 
 	currentMode = mode;
-	printf("Writing %x\n", mode);
+//	printf("Writing %x\n", mode);
 	write(serialFDAPM, &mode, 1); 
 	return 0;
 }

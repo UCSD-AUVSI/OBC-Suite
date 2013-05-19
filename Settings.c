@@ -23,7 +23,6 @@ void createStartFile(int speed){
 	strcpy(arg, "");
 	sprintf(arg, "echo \"%d\" > start.txt", speed);
 	system(arg);
-	isShooting = 1;
 }
 int main(){
 	char choice = 0x29;
@@ -32,8 +31,8 @@ int main(){
 
 	while(choice != 0x35){
 		system("clear");
-		printf("(0) Start shooting\n");
-		printf("(1) Stop shooting\n");
+		printf("(0) Stop shooting\n");
+		printf("(1) Start shooting\n");
 		printf("(2) Large Fine JPEG\n");
 		printf("(3) Medium Fine JPEG\n");
 		printf("(4) Change Shoot Speed, Currently %d Hz\n", speed);
@@ -43,11 +42,12 @@ int main(){
 
 		switch(choice){
 			case 0x30:
-				createStartFile(speed);
-				break;
-			case 0x31: 
 				system("touch stop.txt"); 
 				isShooting = 0;
+				break;
+			case 0x31: 
+				createStartFile(speed);
+				isShooting = 1;
 				break;
 			case 0x32: 
 				if(isShooting){
