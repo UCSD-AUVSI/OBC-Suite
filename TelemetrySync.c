@@ -37,45 +37,41 @@ void * telemetrySync()
 	int readingString = 0;
 
 	while(1){
-		while((num_bytes_read = read(serialFDTel, &buffer, BUFFER_SIZE)) 
-				!= 0 )
-		{
-			for(i = 0; i < num_bytes_read; i++){
-				if(!readingString){
-					if(buffer[i] != ' '){
-						number[j] = buffer[i];
-						j++;
-					}
-					else{
-						readingString = 1;
-						j = 0;
-					}
+		num_bytes_read = read(serialFDTel, &buffer, BUFFER_SIZE); 
+		for(i = 0; i < num_bytes_read; i++){
+			if(!readingString){
+				if(buffer[i] != ' '){
+					number[j] = buffer[i];
+					j++;
 				}
-				else if(readingString){
-					if(buffer[i] != '\n'){
-						line[k] = buffer[i];
-						k++;
-					}
-					else{
-						readingString = 0;
-						k = 0;
+				else{
+					readingString = 1;
+					j = 0;
+				}
+			}
+			else if(readingString){
+				if(buffer[i] != '\n'){
+					line[k] = buffer[i];
+					k++;
+				}
+				else{
+					readingString = 0;
+					k = 0;
+					
+					strcat(number, ".txt");
+					char* GPSData = getLastGPS();
+					strcat(line, GPSData);
 
-						strcat(number, ".txt");
-						char* GPSData = getLastGPS();
-						strcat(line, GPSData);
-
-						FILE * telemfile = fopen(number, "w");
-						fprintf(telemfile, "%s",  line);
-						fclose(telemfile);
-
-						free(GPSData);
-						memset(number, '\0', 9);
-						memset(line, '\0', BUFFER_SIZE-1);
-					}
+					FILE * telemfile = fopen(number, "w");
+					fprintf(telemfile, "%s", line);
+					fclose(telemfile);
+					
+					free(GPSData);
+					memset(number, '\0', 9);
+					memset(line, '\0', BUFFER_SIZE-1);
 				}
 			}
 		}
 	}
 	return NULL;
 }
-

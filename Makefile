@@ -11,4 +11,4 @@ FrontEnd: Settings.c
 	$(CC) Settings.c $(CFLAGS) $@
 
 clean: 
-	rm -f *.txt *.jpg 
+	rm -f ./*.txt ./*.jpg 
