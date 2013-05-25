@@ -18,10 +18,7 @@ int serialFDGPS, useGPS = 0;
 int initGPSListener(){
 	sem_init(&currAccess, 0, 1);
 	
-	if((currGPS = malloc(GPS_BUFFER_SIZE + 1)) == -1){
-		return -2;
-	}
-	
+	currGPS = malloc(GPS_BUFFER_SIZE + 1);
 	memset(currGPS, '\0', GPS_BUFFER_SIZE + 1);
 
 	if(openGPSSerial(&serialFDGPS) == -1)
@@ -85,12 +82,6 @@ int getStatus(){
 	packet[1] = 0x03;
 	getPacket(packet + 2, 20);
 	
-/*	int i;
-	for(i = 0; i < 20; i++){
-		printf("%02x ", packet[i]);
-	}
-	printf("\n\n");
-*/
 	if(checkChecksum(packet, 22) == 0){
 		if((packet[8] == 0x02 || packet[8] == 0x03 || packet[8] == 0x04) && (packet[9] & 0x01) == 0x01){//gpsFixOk && 2D/3D/GPS+DeadReckoning
 			useGPS = 1;
@@ -108,12 +99,6 @@ int getGPS(){
 	packet[1] = 0x02;
 	getPacket(packet + 2, 32);
 	
-/*	int i;
-	for(i = 8; i < 24; i++){
-		printf("%d: %02x ", i, packet[i]);
-	}
-	printf("\n\n");
-*/
 	if(checkChecksum(packet, 34) == 0){
 		sem_wait(&currAccess);
 		
@@ -151,8 +136,3 @@ void* GPSListenControl(){
 	}
 	return NULL;
 }
-/*
-int main(){
-	initGPSListener();
-	GPSListenControl();
-}*/

@@ -6,6 +6,7 @@
 #include <semaphore.h>
 
 #include "CameraInfo.h"
+#include "TelemetrySync.h"
 
 typedef struct CF{
 	struct CF* next;
@@ -85,6 +86,8 @@ void * GetEvents(){
 				gp_camera_file_get(getMyCamera(), my_FP->folder, my_FP->name, GP_FILE_TYPE_NORMAL, my_File, getMyContext());
 
 				AddFile(my_File, my_FP->name);
+				
+				saveLast();
 
 				sem_post(&NewFileSem);
 				free(my_FP);
