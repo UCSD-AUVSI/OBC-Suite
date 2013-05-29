@@ -12,14 +12,14 @@
 #include "SerialControl.h"
 #include "GPSSync.h"
 
-#define NAME_SIZE 9
+#define NAME_SIZE 40
 #define BUFFER_SIZE 80
 #define LINE_SIZE 150
 
 sem_t currAccess;
 
 char *currTelName, *currTelData;
-int serialFDTel, currTelNumber = 0;
+int serialFDTel;
 
 int initTelListener(){
 	sem_init(&currAccess, 0, 1);
@@ -37,11 +37,10 @@ int initTelListener(){
 	return 0;
 }
 
-void saveLast(){
+void saveLast(long long time){
 	sem_wait(&currAccess);
 	
-	sprintf(currTelName, "%04d.txt", currTelNumber);
-	currTelNumber++;
+	sprintf(currTelName, "%llu.txt", time);
 
 	FILE * telemfile = fopen(currTelName, "w");
 	fprintf(telemfile, "%s", currTelData);

@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <string.h>
 
+#include <time.h>
+
 #include <semaphore.h>
 
 #include "CameraInfo.h"
@@ -74,6 +76,8 @@ void * GetEvents(){
 	CameraFile* my_File;
 	CameraEventType my_Type;
 	void* retevent;
+	struct timespec time;
+	char filename[40];
 	while(1){
 		CameraControl();
 		do{
@@ -85,9 +89,14 @@ void * GetEvents(){
 
 				gp_camera_file_get(getMyCamera(), my_FP->folder, my_FP->name, GP_FILE_TYPE_NORMAL, my_File, getMyContext());
 
-				AddFile(my_File, my_FP->name);
+				clock_gettime(CLOCK_REALTIME, &time);
+				long long time_millis = time.tv_sec * 1000 
+						  + time.tv_nsec / 1000000;
+					
+				sprintf(filename, "%llu.jpg", time_millis);
+				AddFile(my_File, filename);
 				
-				saveLast();
+				saveLast(time_millis);
 
 				sem_post(&NewFileSem);
 				free(my_FP);
