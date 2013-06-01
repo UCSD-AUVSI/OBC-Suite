@@ -1,9 +1,11 @@
 #include <stdio.h>
+#include <string.h>
 
 #include <gphoto2/gphoto2.h>
 
 Camera* my_Camera; 
 GPContext* my_Context;
+char OPTTY[15], APMTTY[15], GPSTTY[15];
 
 int initCamera(){
 	gp_camera_new(&my_Camera);
@@ -26,4 +28,23 @@ Camera* getMyCamera(){
 
 GPContext* getMyContext(){
 	return my_Context;
+}
+
+int setTTYPorts(char* OP, char* APM, char* GPS){
+	strncpy(OPTTY, OP, 15);
+	strncpy(APMTTY, APM, 15);
+	strncpy(GPSTTY, GPS, 15);
+	return 0;
+}
+
+char* getOPTTY(){
+	return OPTTY;	
+}
+
+char* getAPMTTY(){
+	return APMTTY;
+}
+
+char* getGPSTTY(){
+	return GPSTTY;
 }

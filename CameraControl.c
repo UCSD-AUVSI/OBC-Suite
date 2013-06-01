@@ -5,7 +5,7 @@
 #include <gphoto2/gphoto2.h>
 
 #include "SerialControl.h"
-#include "CameraInfo.h"
+#include "SharedInfo.h"
 
 #define STOP_CYCLE_COUNT 20
 
