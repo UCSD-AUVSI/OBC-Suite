@@ -46,8 +46,8 @@ int openGPSSerial(int* desc){
 	}
 	else{
 		tcgetattr(*desc, &options);
-		cfsetispeed(&options, B57600);
-		cfsetospeed(&options, B57600);
+		cfsetispeed(&options, B38400);
+		cfsetospeed(&options, B38400);
 		options.c_cflag |= (CLOCAL |CREAD);
 		tcsetattr(*desc, TCSANOW, &options);
 		return 0;
