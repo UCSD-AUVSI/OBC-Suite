@@ -11,8 +11,8 @@
 #include "SharedInfo.h"
 
 #define DEFAULT_OP "0"
-#define DEFAULT_APM "1"
-#define DEFAULT_GPS "2"
+#define DEFAULT_APM "2"
+#define DEFAULT_GPS "1"
 
 /*
    Latest AUVSICameraCode as of 5/31/2013.
@@ -55,8 +55,6 @@ int initSuite(){
 }
 
 int main(int argc, char ** argv){
-	//Initialize all sub classes
-	initSuite();
 
 	if(argc != 1 && argc != 4){
 		usage();
@@ -100,6 +98,9 @@ int main(int argc, char ** argv){
 	printf("%s\t%s\t%s\n", OP, APM, GPS);
 	setTTYPorts(OP, APM, GPS);
 
+	//Initialize all sub classes
+	initSuite();
+	
 	//Spawning the four worker threads
 	pthread_t telemetryThread, GPSThread, getThread, saveThread;
 
