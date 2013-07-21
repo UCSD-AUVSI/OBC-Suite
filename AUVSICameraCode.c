@@ -10,9 +10,9 @@
 #include "ImageSync.h"
 #include "SharedInfo.h"
 
-#define DEFAULT_OP "0"
+#define DEFAULT_OP "1"
 #define DEFAULT_APM "2"
-#define DEFAULT_GPS "1"
+#define DEFAULT_GPS "0"
 
 /*
    Latest AUVSICameraCode as of 5/31/2013.

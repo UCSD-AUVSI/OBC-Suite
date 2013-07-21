@@ -120,7 +120,6 @@ void* GPSListenControl(){
 				read(serialFDGPS, &nextByte, 1);
 				if(nextByte == 0x01){ //Class byte = NAV
 					read(serialFDGPS, &nextByte, 1);
-
 					switch(nextByte){
 						case 0x02: //POSLLH
 							getGPS();
