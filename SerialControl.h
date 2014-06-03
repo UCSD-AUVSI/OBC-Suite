@@ -1,3 +1,1 @@
-int openOPSerial(int* desc);
-int openAPMSerial(int* desc);
-int openGPSSerial(int* desc);
+int getTLMSerial(int* desc);
