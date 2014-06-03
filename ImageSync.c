@@ -8,7 +8,7 @@
 #include <semaphore.h>
 
 #include "SharedInfo.h"
-#include "TelemetrySync.h"
+#include "TLMSync.h"
 
 //Struct that sets up a linked list node
 //Holds CameraFile objects (basically just images in memory) and the filename that this image will be saved to disk with
